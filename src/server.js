@@ -2,11 +2,19 @@ const express = require("express");
 const http = require("http");
 const { WebSocketServer } = require("ws");
 const crypto = require("crypto");
+const cors = require("cors");
 const { getLocalIPv4Addresses } = require("./network");
 
 const app = express();
 const server = http.createServer(app);
 const PORT = Number(process.env.PORT || 3000);
+
+app.use(
+  cors({
+    origin: "*", // Allows any frontend to connect (perfect for a free file transfer tool)
+    methods: ["GET", "POST"],
+  }),
+);
 
 // Single canonical session store
 const sessions = new Map();
